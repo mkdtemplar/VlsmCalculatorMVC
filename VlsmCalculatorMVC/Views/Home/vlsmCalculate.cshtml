@@ -1,0 +1,169 @@
+﻿
+@using VlsmCalculatorMVC.Views.Home
+@model VlsmCalculatorMVC.Models.VlsmCalculateModel
+@{
+    ViewData["Title"] = "VLSM CALCULATOR";
+}
+<style>
+    table {
+        background-color: lightblue;
+        border-collapse: collapse;
+        border: 1px solid gray;
+        text-align: center;
+    }
+        
+    th, td {
+        padding: 5px;
+        border: 1px solid gray;
+        text-align: center;
+    }
+        
+    tr:nth-child(even) {
+        background-color: lightcoral;
+        text-align: center;
+    }
+        
+    tr:first-child {
+        background-color: lightgreen;
+        text-align: center;
+    }
+</style>
+<form method="post" asp-controller="Home" asp-action="vlsmCalculate">
+    <label>Enter IP address: </label><input type="number" min="0" max="223" step="1" id="firstoctet" name="first" />
+    <input type="number" min="0" max="255" step="1" id="secondoctet" name="second" required />
+    <input type="number" min="0" max="255" step="1" id="thirdoctet" name="third" required />
+    <input type="number" min="0" max="255" step="1" id="fourthoctet" name="fourth" required /><br><br>
+    <label>CIDR:</label><input type="number" min="24" max="31" step="1" id="cidr" name="cid" required /><br><br>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="inputFormRow">
+
+                <div class="input-group mb-3" style="width: 35%">
+                    <input type="number" name="lan[]" class="form-control m-input" placeholder="Enter number of Hosts" autocomplete="off" style="width: 30%" required />
+                    <div class="input-group-append">
+                        <button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove Network</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="newRow"></div>
+            <button id="addRow" type="button" class="btn btn-info">Add Network</button>
+            <button type="button" class="btn btn-info">Submit to SQlite</button>
+            <button  type="submit" class="btn btn-info" data-toggle="modal" data-target="#myModal">Calculate VLSM</button>
+            <button type="reset" class="btn btn-info" onclick="reFresh()">New calculation</button>
+        </div>
+    </div>
+    <div> </div>
+</form>
+<br>
+<br>
+<br>
+
+<div class="container mt-3">
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal" style="text-align: center">
+        <div class="modal-dialog" style="max-width: 100%; width: auto; display: inline-block;">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Results of VLSM</h4>
+                    <button type="button" class="close" data-dismiss="modal" id="closeModalX">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="innertable">
+                        <table class='table-primary table-striped caption-top'>
+                            <thead>
+                            <tr>
+                                <th scope="col">Network ID</th>
+                                <th scope="col">CIDR</th>
+                                <th scope="col">Subnet Mask</th>
+                                <th scope="col">Number of Hosts per subnet</th>
+                                <th scope="col">LAN</th>
+                                <th scope="col">Number of subnets</th>
+                                <th scope="col">Range of usable IP addresses</th>
+                                <th scope="col">Broadcast ID</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @functions
+                            {
+                                  
+                            }
+                            @for (int i = 0; i < @Model.HostsPerLan.Count; i++)
+                            {
+
+                                var subnetIndex = Array.IndexOf(@Model.hosts, @Model.HostsPerLan[i]);
+                                var subnetNo = @Model.subnets[subnetIndex];
+                                var subMaskNo = @Model.submask[subnetIndex];
+                                var subnetDecimal = @Model.cidrLastOctet[subnetIndex];
+
+                                <tr>
+                                    <td>
+                                        @Model.firstOctet.@Model.secondOctet.@Model.thirdOctet.@Model.fourthOctet
+                                    </td>
+                                    <td>
+                                        /@subMaskNo
+                                    </td>
+                                    <td>
+                                        255.255.255.@subnetDecimal
+                                    </td>
+                                    <td>
+                                        @Model.HostsPerLan[i]
+                                    </td>
+                                    <td>
+                                        LAN: @(i + 1)
+                                    </td>
+                                    <td>
+                                        @subnetNo
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+</div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow" style="width: 35%">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="number" name="lan[]" class="form-control m-input" placeholder="Enter number of Hosts" autocomplete="off" style="width: 30%" required>';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove Network</button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    });
+
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+
+    $("#closeModal").click(function () {
+        $("#myModal").modal('hide');
+    });
+
+    $("#closeModalX").click(function () {
+        $("#myModal").modal('hide');
+    });
+</script>
