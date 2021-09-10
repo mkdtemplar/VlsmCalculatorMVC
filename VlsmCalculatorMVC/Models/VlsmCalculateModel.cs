@@ -7,13 +7,13 @@ namespace VlsmCalculatorMVC.Models
 {
     public class VlsmCalculateModel
     {
-        public int? firstOctet { get; set; }
-        public int? secondOctet { get; set; }
-        public int? thirdOctet { get; set; }
-        public int? fourthOctet { get; set; }
-        public int? cidrValue { get; set; }
+        public int firstOctet { get; set; }
+        public int secondOctet { get; set; }
+        public int thirdOctet { get; set; }
+        public int fourthOctet { get; set; }
+        public int cidrValue { get; set; }
 
-        public int[] lans { get; set; }
+        public List<int> lans { get; set; }
 
         public List<int> LanHostList = new()
         {
@@ -99,7 +99,7 @@ namespace VlsmCalculatorMVC.Models
         {
             
 
-            for (int i = 0; i < lans.Length; i++)
+            for (int i = 0; i < lans.Count; i++)
             {
                 LanHostList[i] = lans[i];
             }

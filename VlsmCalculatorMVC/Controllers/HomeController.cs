@@ -37,10 +37,14 @@ namespace VlsmCalculatorMVC.Controllers
         {
             return View();
         }
-
-        public  IActionResult VlsmCalculate()
+       
+        public IActionResult VlsmCalculate(VlsmCalculateModel vlsmCalculate)
         {
-            
+            int firstoctet = vlsmCalculate.firstOctet;
+            int secondoctet = vlsmCalculate.secondOctet;
+            int thirdoctet = vlsmCalculate.thirdOctet;
+            int fourthoctet = vlsmCalculate.fourthOctet;
+            int cidr = vlsmCalculate.cidrValue;
             return View();
         }
 

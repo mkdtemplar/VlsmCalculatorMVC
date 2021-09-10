@@ -1,5 +1,6 @@
 ﻿
 @using VlsmCalculatorMVC.Views.Home
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model VlsmCalculatorMVC.Models.VlsmCalculateModel
 @{
     ViewData["Title"] = "VLSM CALCULATOR";
@@ -11,35 +12,35 @@
         border: 1px solid gray;
         text-align: center;
     }
-        
+
     th, td {
         padding: 5px;
         border: 1px solid gray;
         text-align: center;
     }
-        
+
     tr:nth-child(even) {
         background-color: lightcoral;
         text-align: center;
     }
-        
+
     tr:first-child {
         background-color: lightgreen;
         text-align: center;
     }
 </style>
 <form method="post" asp-controller="Home" asp-action="VlsmCalculate">
-    <label>Enter IP address: </label><input type="number" min="0" max="223" step="1" id="firstoctet" name="first" />
-    <input type="number" min="0" max="255" step="1" id="secondoctet" name="second" required />
-    <input type="number" min="0" max="255" step="1" id="thirdoctet" name="third" required />
-    <input type="number" min="0" max="255" step="1" id="fourthoctet" name="fourth" required /><br><br>
-    <label>CIDR:</label><input type="number" min="24" max="31" step="1" id="cidr" name="cid" required /><br><br>
+    <label>Enter IP address: </label><input asp-for="firstOctet"  type="number" min="0" max="223" step="1" />
+    <input type="number" min="0" max="255" step="1" id="secondoctet" asp-for="secondOctet"  required />
+    <input type="number" min="0" max="255" step="1" asp-for="thirdOctet"  required />
+    <input type="number" min="0" max="255" step="1" asp-for="fourthOctet" required /><br><br>
+    <label>CIDR:</label><input type="number" min="24" max="31" step="1" asp-for="cidrValue"  required /><br><br>
     <div class="row">
         <div class="col-lg-12">
             <div id="inputFormRow">
 
                 <div class="input-group mb-3" style="width: 35%">
-                    <input type="number" name="lan[]" class="form-control m-input" placeholder="Enter number of Hosts" autocomplete="off" style="width: 30%" required />
+                    <input type="number" asp-for="lans" class="form-control m-input" placeholder="Enter number of Hosts" autocomplete="off" style="width: 30%" required />
                     <div class="input-group-append">
                         <button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove Network</button>
                     </div>
@@ -49,7 +50,7 @@
             <div id="newRow"></div>
             <button id="addRow" type="button" class="btn btn-info">Add Network</button>
             <button type="button" class="btn btn-info">Submit to SQlite</button>
-            <button  type="submit" class="btn btn-info" data-toggle="modal" data-target="#myModal">Calculate VLSM</button>
+            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#myModal">Calculate VLSM</button>
             <button type="reset" class="btn btn-info" onclick="reFresh()">New calculation</button>
         </div>
     </div>
@@ -75,19 +76,19 @@
                     <div id="innertable">
                         <table class='table-primary table-striped caption-top'>
                             <thead>
-                            <tr>
-                                <th scope="col">Network ID</th>
-                                <th scope="col">CIDR</th>
-                                <th scope="col">Subnet Mask</th>
-                                <th scope="col">Number of Hosts per subnet</th>
-                                <th scope="col">LAN</th>
-                                <th scope="col">Number of subnets</th>
-                                <th scope="col">Range of usable IP addresses</th>
-                                <th scope="col">Broadcast ID</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Network ID</th>
+                                    <th scope="col">CIDR</th>
+                                    <th scope="col">Subnet Mask</th>
+                                    <th scope="col">Number of Hosts per subnet</th>
+                                    <th scope="col">LAN</th>
+                                    <th scope="col">Number of subnets</th>
+                                    <th scope="col">Range of usable IP addresses</th>
+                                    <th scope="col">Broadcast ID</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                                <tr>
                                     <td>
                                        
                                     </td>
@@ -98,19 +99,17 @@
                                         255.255.255.
                                     </td>
                                     <td>
-                                        
                                     </td>
                                     <td>
                                         LAN:
                                     </td>
                                     <td>
-                                       
                                     </td>
                                 </tr>
-                            
+
                             </tbody>
                         </table>
-</div>
+                    </div>
                 </div>
 
 
