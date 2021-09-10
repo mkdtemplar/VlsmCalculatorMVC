@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VlsmCalculatorMVC.Models;
-using VlsmCalculatorMVC.Views.Home;
 using VlsmDBContext;
 
 namespace VlsmCalculatorMVC.Controllers
@@ -40,18 +38,10 @@ namespace VlsmCalculatorMVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        public  IActionResult vlsmCalculate()
+        public  IActionResult VlsmCalculate()
         {
-            var VlsmModel = new VlsmCalculateModel
-            {
-                firstOctet = int.Parse(Request.Form["first"]),
-                secondOctet = int.Parse(Request.Form["second"]),
-                thirdOctet = int.Parse(Request.Form["third"]),
-                fourthOctet = int.Parse(Request.Form["fourth"]),
-                cidrValue = int.Parse(Request.Form["cid"])
-            };
-            return View(VlsmModel);
+            
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

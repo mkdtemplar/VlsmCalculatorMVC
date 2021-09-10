@@ -28,7 +28,7 @@
         text-align: center;
     }
 </style>
-<form method="post" asp-controller="Home" asp-action="vlsmCalculate">
+<form method="post" asp-controller="Home" asp-action="VlsmCalculate">
     <label>Enter IP address: </label><input type="number" min="0" max="223" step="1" id="firstoctet" name="first" />
     <input type="number" min="0" max="255" step="1" id="secondoctet" name="second" required />
     <input type="number" min="0" max="255" step="1" id="thirdoctet" name="third" required />
@@ -87,39 +87,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @functions
-                            {
-                                  
-                            }
-                            @for (int i = 0; i < @Model.HostsPerLan.Count; i++)
-                            {
-
-                                var subnetIndex = Array.IndexOf(@Model.hosts, @Model.HostsPerLan[i]);
-                                var subnetNo = @Model.subnets[subnetIndex];
-                                var subMaskNo = @Model.submask[subnetIndex];
-                                var subnetDecimal = @Model.cidrLastOctet[subnetIndex];
-
-                                <tr>
+                            <tr>
                                     <td>
-                                        @Model.firstOctet.@Model.secondOctet.@Model.thirdOctet.@Model.fourthOctet
+                                       
                                     </td>
                                     <td>
-                                        /@subMaskNo
+                                        /
                                     </td>
                                     <td>
-                                        255.255.255.@subnetDecimal
+                                        255.255.255.
                                     </td>
                                     <td>
-                                        @Model.HostsPerLan[i]
+                                        
                                     </td>
                                     <td>
-                                        LAN: @(i + 1)
+                                        LAN:
                                     </td>
                                     <td>
-                                        @subnetNo
+                                       
                                     </td>
                                 </tr>
-                            }
+                            
                             </tbody>
                         </table>
 </div>
