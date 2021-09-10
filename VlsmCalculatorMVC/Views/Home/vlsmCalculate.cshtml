@@ -4,6 +4,8 @@
 @model VlsmCalculatorMVC.Models.VlsmCalculateModel
 @{
     ViewData["Title"] = "VLSM CALCULATOR";
+    VlsmCalculateModel vlsmCalculateModel = new VlsmCalculateModel();
+    var first = vlsmCalculateModel.firstOctet;
 }
 <style>
     table {
@@ -90,7 +92,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                       
+                                       @first
                                     </td>
                                     <td>
                                         /

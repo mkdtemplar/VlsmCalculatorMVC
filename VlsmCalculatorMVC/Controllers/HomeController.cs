@@ -37,7 +37,7 @@ namespace VlsmCalculatorMVC.Controllers
         {
             return View();
         }
-       
+       [HttpPost]
         public IActionResult VlsmCalculate(VlsmCalculateModel vlsmCalculate)
         {
             int firstoctet = vlsmCalculate.firstOctet;
