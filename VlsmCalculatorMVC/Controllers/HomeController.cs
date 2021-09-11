@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VlsmCalculatorMVC.Models;
+using VlsmCalculatorMVC.Views.Home;
 using VlsmDBContext;
 
 namespace VlsmCalculatorMVC.Controllers
@@ -12,11 +13,13 @@ namespace VlsmCalculatorMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly VlsmDB db;
+        
 
         public HomeController(ILogger<HomeController> logger, VlsmDB injectedContext)
         {
             _logger = logger;
             db = injectedContext;
+            
         }
 
         public async Task<IActionResult> ReadResult()
@@ -38,14 +41,15 @@ namespace VlsmCalculatorMVC.Controllers
             return View();
         }
       
+        public IActionResult VlsmCalculate()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult VlsmCalculate(VlsmCalculateModel vlsmCalculate)
         {
-            int firstoctet = vlsmCalculate.firstOctet;
-            int secondoctet = vlsmCalculate.secondOctet;
-            int thirdoctet = vlsmCalculate.thirdOctet;
-            int fourthoctet = vlsmCalculate.fourthOctet;
-            int cidr = vlsmCalculate.cidrValue;
-            return View();
+            return View(vlsmCalculate);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

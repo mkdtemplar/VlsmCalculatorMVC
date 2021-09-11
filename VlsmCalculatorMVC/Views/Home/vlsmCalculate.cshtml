@@ -1,11 +1,11 @@
 ﻿
 @using VlsmCalculatorMVC.Views.Home
+@model VlsmCalculateModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model VlsmCalculatorMVC.Models.VlsmCalculateModel
 @{
     ViewData["Title"] = "VLSM CALCULATOR";
-    VlsmCalculateModel vlsmCalculateModel = new VlsmCalculateModel();
-    var first = vlsmCalculateModel.firstOctet;
+
+    VlsmCalculateModel vlsm = new VlsmCalculateModel();
 }
 <style>
     table {
@@ -32,11 +32,11 @@
     }
 </style>
 <form method="post" asp-controller="Home" asp-action="VlsmCalculate">
-    <label>Enter IP address: </label><input asp-for="firstOctet"  type="number" min="0" max="223" step="1" />
+    <label>Enter IP address: </label><input  type="number" min="0" max="223" step="1" asp-for="firstOctet"/>
     <input type="number" min="0" max="255" step="1" id="secondoctet" asp-for="secondOctet"  required />
     <input type="number" min="0" max="255" step="1" asp-for="thirdOctet"  required />
     <input type="number" min="0" max="255" step="1" asp-for="fourthOctet" required /><br><br>
-    <label>CIDR:</label><input type="number" min="24" max="31" step="1" asp-for="cidrValue"  required /><br><br>
+    <label>CIDR:</label><input type="number" min="24" max="31" step="1" name="cidrValue"  required /><br><br>
     <div class="row">
         <div class="col-lg-12">
             <div id="inputFormRow">
@@ -52,7 +52,7 @@
             <div id="newRow"></div>
             <button id="addRow" type="button" class="btn btn-info">Add Network</button>
             <button type="button" class="btn btn-info">Submit to SQlite</button>
-            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#myModal">Calculate VLSM</button>
+            <input type="submit" class="btn btn-info" data-toggle="modal" data-target="#myModal" value="Calculate VLSM"/>
             <button type="reset" class="btn btn-info" >New calculation</button>
         </div>
     </div>
@@ -92,7 +92,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                       @first
+                                       @vlsm.firstOctet
                                     </td>
                                     <td>
                                         /

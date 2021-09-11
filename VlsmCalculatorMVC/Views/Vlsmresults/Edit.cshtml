@@ -1,0 +1,64 @@
+﻿@model VlsmDBContext.Vlsmresult
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Vlsmresult</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="NetworkId" class="control-label"></label>
+                <input asp-for="NetworkId" class="form-control" />
+                <span asp-validation-for="NetworkId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cidr" class="control-label"></label>
+                <input asp-for="Cidr" class="form-control" />
+                <span asp-validation-for="Cidr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubnetMask" class="control-label"></label>
+                <input asp-for="SubnetMask" class="form-control" />
+                <span asp-validation-for="SubnetMask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfHostsPerSubnet" class="control-label"></label>
+                <input asp-for="NumberOfHostsPerSubnet" class="form-control" />
+                <span asp-validation-for="NumberOfHostsPerSubnet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfSubnets" class="control-label"></label>
+                <input asp-for="NumberOfSubnets" class="form-control" />
+                <span asp-validation-for="NumberOfSubnets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RangeOfUsableIpaddresses" class="control-label"></label>
+                <input asp-for="RangeOfUsableIpaddresses" class="form-control" />
+                <span asp-validation-for="RangeOfUsableIpaddresses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BroadcastId" class="control-label"></label>
+                <input asp-for="BroadcastId" class="form-control" />
+                <span asp-validation-for="BroadcastId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
